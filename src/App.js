@@ -1,9 +1,24 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Home from './Pages/Home';
+import Login from './Pages/Login';
+import Dashboard from './Pages/Dashboard';
+import Register from './Pages/Register';
+import Projects from './Pages/Projects';
+import Footer from './Components/Footer';
+
 
 function App() {
   return (
     <div>
-      <h1>Project Fair</h1>
+      <Routes>
+        <Route path='/' element={<Home/>}></Route>
+        <Route path='/login' element={<Login/>}></Route>
+        <Route path='/register' element={<Register/>}></Route>
+        <Route path='/dashboard' element={<Dashboard/>}></Route>
+        <Route path='/projects' element={<Projects/>}></Route>
+      </Routes>
+      <Footer/>
     </div>
   );
 }
