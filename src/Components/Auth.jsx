@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import registerPic from '../Assets/360_F_395263203_igjwyFhK5W4gG1tTzZwqS1TtRpZ0g0iF-removebg-preview.png'
 import { Form } from 'react-bootstrap'
-import { registerAPI } from '../Services/allAPI'
+import { loginAPI, registerAPI } from '../Services/allAPI'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function Auth({register}) {
@@ -25,6 +25,28 @@ function Auth({register}) {
                 })
                 navigate('/login')
             
+            }else{
+                toast.error(result.response.data)
+                console.log(result);
+            }
+        }
+    }
+
+    const handleLogin = async (e)=>{
+        e.preventDefault()
+        const {email,password} = userData
+        if(!email || !password){
+            toast.warning("Please fill the form completely")
+        }else{
+            const result = await loginAPI(userData)
+            if(result.status===200){
+                sessionStorage.setItem("existingUser",JSON.stringify(result.data.existingUser))
+                sessionStorage.setItem("token",result.data.token)
+
+                setUserData({
+                    email:"",password:""
+                })
+                navigate('/')
             }else{
                 toast.error(result.response.data)
                 console.log(result);
@@ -70,7 +92,7 @@ function Auth({register}) {
                                 <p>Already have an Account? <Link to={'/login'}>Login</Link></p>
                             </div> :
                             <div>
-                            <button className='btn btn-light mb-2'>SIGN IN</button>
+                            <button onClick={handleLogin} className='btn btn-light mb-2'>SIGN IN</button>
                             <p>New User? <Link to={'/register'}>Sign Up</Link></p>
 
                         </div>
