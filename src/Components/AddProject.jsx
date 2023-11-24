@@ -38,20 +38,22 @@ function AddProject() {
     reqBody.append("projectImage",projectImage)
 
    if(token){
-      reqHeader = {
+     const reqHeader = {
       "Content-Type":"multipart/form-data",
       "Authorization":`Bearer ${token}`
     }
-   }
-
     const result = await addProjectAPI(reqBody,reqHeader)
     console.log(result);
     if(result.status === 200){
       console.log(result.data);
+      handleClose()
+      alert('Project Added')
     }else{
       console.log(result);
-      console.log(result.response.data);
+      toast.warning(result.response.data);
     }
+   }
+
    }
   }
 
