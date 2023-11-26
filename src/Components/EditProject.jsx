@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { BASE_URL } from '../Services/baseurl';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { editProjectAPI } from '../Services/allAPI';
+import { editProjectResponseContext } from '../Contexts/ContextShare';
 
 function EditProject({project}) {
+    const {editProjectResponse,setEditProjectResponse} = useContext(editProjectResponseContext)
     const [projectDetails, setProjectDetails] = useState({
         id:project._id,title: project.title, languages: project.languages, overview: project.overview, github: project.github, website: project.website, projectImage:""
       })
@@ -48,6 +50,7 @@ function EditProject({project}) {
             if(result.status === 200){
                 handleClose()
                 // pass response to my projects
+                setEditProjectResponse(result.data)
             }else{
                 console.log(result);
                 toast.error(result.response.data)
@@ -62,6 +65,7 @@ function EditProject({project}) {
             if(result.status === 200){
                 handleClose()
                 // pass response to my projects
+                setEditProjectResponse(result.data)
             }else{
                 console.log(result);
                 toast.error(result.response.data)
