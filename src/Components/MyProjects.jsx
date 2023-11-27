@@ -29,7 +29,7 @@ function MyProjects() {
         getUserProjects()
     },[addProjectResponse,editProjectResponse])
 
-    const handleDelete = async ()=>{
+    const handleDelete = async (id)=>{
         const token = sessionStorage.getItem('token')
         const reqHeader = {
             "Content-Type": "application/json","Authorization":`Bearer ${token}`
